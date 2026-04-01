@@ -1,0 +1,50 @@
+
+# --- API 客户端与容灾配置 ---
+resilience:
+  # 在最终放弃前的最大重试次数
+  max_retries: 3
+  # 初始等待时间（秒），后续会指数增加
+  wait_initial_seconds: 2
+  # 单次API调用的超时时间（秒）
+  request_timeout: 120
+
+# --- 生成模型配置 (由vLLM部署) ---
+generator_model:
+  model_name: "llama-2-70b-vllm"
+  # 提供一或多个API服务器地址作为主备
+  api_server_addresses:
+    - "http://<MASTER_NODE_IP_1>:8000/v1"
+    - "http://<MASTER_NODE_IP_2>:8000/v1" # 备用API服务器
+
+# --- 评审模型配置 (LLM-as-a-Judge) ---
+judge_model:
+  model_name: "gpt-4-turbo-preview"
+  api_server_address: "https://api.openai.com/v1"
+  api_key: "env" 
+
+# --- Agent 配置 ---
+agents:
+  self_instruct:
+    # 新指令与种子指令池的最大ROUGE-L相似度阈值
+    rouge_l_threshold: 0.7
+    # 每次生成时从种子池中采样的指令数量
+    num_instructions_to_sample: 3
+  evol_instruct:
+    # 深度演化的具体策略
+    deepening_strategies:
+      - "add_constraints"
+      - "deepening"
+      - "concretizing"
+      - "increased_reasoning_steps"
+      - "complicating_input"
+  mcts:
+    # MCTS树的迭代次数
+    num_iterations: 10
+    # UCT公式中的探索因子
+    exploration_factor: 1.414
+
+# --- 数据路径配置 ---
+input_data_dir: "./input_reasoning_tasks"
+# 存放 Self-Instruct 种子指令的文件
+seed_tasks_path: "./seed_tasks.jsonl"
+output_data_path: "./output_synthetic_data.jsonl"

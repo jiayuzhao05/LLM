@@ -1,0 +1,6 @@
+{
+    "task_id": "math_evol_001",
+    "task_type": "math",
+    "synthesis_algorithm": "evol-instruct",
+    "problem": "Calculate the area of a circle with a radius of 5."
+}
