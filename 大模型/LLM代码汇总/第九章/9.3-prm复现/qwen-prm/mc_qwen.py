@@ -47,6 +47,7 @@ def evaluate_consistency(res):
         return 1
     else:
         return 0
+           
 def mock_mc_estimation(problem_text: str, solution_steps: List[str], groud_truth) -> List[int]:
     """
     蒙特卡洛(MC)估计函数：
@@ -82,7 +83,7 @@ def mock_policy_model_generate(problem_text: str, num_solutions=6) -> List[List[
     该函数为策略模型(Policy Model)输出函数
     给定一道题目，返回不同的num_solutions个解答（解答由多步组成）。
     
-    返回结构: List[solution], 每个solution是List[str], 其中每个str表示一个推理步骤。
+    返回结构: List[solution], 每个solution是List[str], 每个str表示一个推理步骤。
     """
     solutions = []
     for _ in range(num_solutions):
@@ -310,7 +311,7 @@ def train_prm_model(filtered_data: List[Dict], epochs=3, batch_size=8, model=Non
 def evaluate_best_of_n(model: SimplePRM, problem_text: str, n=8, tokenizer=None):
     """
     给定一个训练好的 PRM 模型，针对单一道题，做 Best-of-N 评估。
-    这里演示：让策略模型生成n个解答，用PRM对每个解答的每步打分，再用“某种合并方法”得到整条解答分数。
+    演示：让策略模型生成n个解答，用PRM对每个解答的每步打分，再用“某种合并方法”得到整条解答分数。
     """
     solutions = mock_policy_model_generate(problem_text, num_solutions=n)
 
@@ -318,7 +319,7 @@ def evaluate_best_of_n(model: SimplePRM, problem_text: str, n=8, tokenizer=None)
     best_sol = None
 
     for sol in solutions:
-        # 将每个step做文本embedding；这里随机模拟
+        # 将每个step做文本embedding；随机模拟
         step_embeddings = [tokenizer([s]) for s in sol]
         step_scores = []
         for emb in step_embeddings:
@@ -383,11 +384,11 @@ def main_demo():
     prm_model = train_prm_model(filtered_data, epochs=3, batch_size=4, tokenizer=tokenizer)
 
     # 6) 做一个简单的 Best-of-N 评估演示
-    print("\n=== Best-of-N 测试 ===")
+    print("\n Best-of-N 测试")
     evaluate_best_of_n(prm_model, problem_text, n=8, tokenizer=tokenizer)
 
     # 7) 做一个类似 PROCESSBENCH 风格的演示
-    print("\n=== PROCESSBENCH 风格测试 ===")
+    print("\n PROCESSBENCH 风格测试")
     test_steps = ["Step1", "Step2", "Step3", "Step4"]
     err_idx = evaluate_processbench_style(prm_model, test_steps, tokenizer=tokenizer)
     if err_idx == -1:

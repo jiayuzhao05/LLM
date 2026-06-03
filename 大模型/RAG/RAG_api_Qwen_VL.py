@@ -220,8 +220,7 @@ def retrieve_from_index_api(query, index, mapping, k=5):
 
 def rerank_results(query, candidates, embeddings_array):
     """
-    使用改写后query的 embedding 与每个候选的原始 embedding 做内积，
-    重新计算得分并排序。
+    使用改写后query的 embedding 与每个候选的原始 embedding 做内积,重新计算得分并排序。
     """
     # 1. embed 改写查询
     embs = get_text_embeddings_api([query])
@@ -270,7 +269,7 @@ def stream_print(text,delay=0.005):
     print()
 
 def main_chat_loop():
-    print("\n=== 多模态 RAG 流式对话系统（含 Query 改写 & 重排） ===")
+    print("\n 多模态 RAG 流式对话系统（含 Query 改写 & 重排）")
     print("输入问题后回车，输入 'exit' 或 'quit' 退出。\n")
     while True:
         raw = input("You: ").strip()

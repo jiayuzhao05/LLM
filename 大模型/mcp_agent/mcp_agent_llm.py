@@ -180,7 +180,7 @@ Now, create a plan for the following user request.
         print(f"[Agent-Brain] LLM generated the following plan:\n{plan_json}")
         
         # 返回解析后的JSON计划
-        # 在真实应用中，这里需要更强的错误处理和校验
+        # 真实应用中，这里需要更强的错误处理和校验
         return json.loads(plan_json)
 
     def _execute_plan(self, plan, initial_request_data):

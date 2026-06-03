@@ -26,7 +26,7 @@ class ValueIteration:
             self.v = new_v
             if max_diff < self.theta: break  # 满足收敛条件,退出评估迭代
             cnt += 1
-        print("价值迭代一共进行%d轮" % cnt)
+        print("价值迭代进行%d轮" % cnt)
         self.get_policy()
 
     def get_policy(self):  # 根据价值函数导出一个贪婪策略

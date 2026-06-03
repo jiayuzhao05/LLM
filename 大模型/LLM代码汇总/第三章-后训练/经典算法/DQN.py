@@ -60,7 +60,7 @@ class DQN:
             -1, 1)
         q_targets = rewards + self.gamma * max_next_q_values * (1 - dones)  # TD误差目标
         dqn_loss = torch.mean(F.mse_loss(q_values, q_targets))  # 均方误差损失函数
-        self.optimizer.zero_grad()  # PyTorch中默认梯度会累积,这里需要显式将梯度置为0
+        self.optimizer.zero_grad()  # PyTorch中默认梯度会累积,这需要显式将梯度置为0
         dqn_loss.backward()  # 反向传播更新参数
         self.optimizer.step()
     

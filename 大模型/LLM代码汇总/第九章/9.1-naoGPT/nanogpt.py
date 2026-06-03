@@ -33,10 +33,10 @@ vocab_size = len(chars)
 print("文本中出现的字符: ", ''.join(chars))
 print("文本中出现的字符数量: ", vocab_size)
 
-# 简单的tokenizer实现
+# tokenizer实现
 # 通过列表推导式创建 string to integer(stoi)和 integer to string(itos)的映射字典
 # 这是一个简单的tokenizer实现，就是简单的把文本中出现过的所有字符按顺序给予一个整数0~vocab_size-1
-# 这样就把字符映射为网络可以处理的数字
+# 把字符映射为网络可以处理的数字
 stoi = { ch:i for i,ch in enumerate(chars) }
 itos = { i:ch for i,ch in enumerate(chars) }
 # 简单的编码和解码规则

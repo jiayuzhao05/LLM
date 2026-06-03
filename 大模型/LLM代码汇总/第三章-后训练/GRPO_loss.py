@@ -43,6 +43,7 @@ def _get_per_token_logps(self, model, input_ids, attention_mask, logits_to_keep)
         token_log_prob = torch.gather(log_probs, dim=1, index=input_ids_row.unsqueeze(1)).squeeze(1)
         per_token_logps.append(token_log_prob)
     return torch.stack(per_token_logps)
+    
 def _prepare_inputs(self, inputs: dict[str, Union[torch.Tensor, Any]]) -> dict[str, Union[torch.Tensor, Any]]:
     device = self.accelerator.device
     prompts = [x["prompt"] for x in inputs]
